@@ -17,8 +17,8 @@ func _ready():
 	self.create_sequences([])
 	var index: int = self._r_gen.randi_range(self._ZERO, self._seqs.size()-1)
 	self._curr_seq = self._seqs[index]
-	self._cycle_delay = 3
-	self._n_curr_cycles = 3
+	self._cycle_delay = 10
+	self._n_curr_cycles = 10
 
 func valid_sequence(curr_seq: Array) -> bool:
 	return curr_seq.has(self._ZERO) and curr_seq.has(self._ONE)

@@ -1,8 +1,8 @@
 extends Sprite
 signal got_to_last_row(car)
 const _DIMENSIONS: Vector2 = Vector2(62, 62)
-const _MAX_MOVEMENTS: int = 13
-const _MOVEMENT_STEP: float = 64.0
+const _MAX_MOVEMENTS: int = 12
+const _MOVEMENT_STEP: int = 64
 var _n_movements: int
 
 func _ready():
