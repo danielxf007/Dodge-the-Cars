@@ -1,16 +1,17 @@
 extends Timer
 
+const _INITIAL_FREQUENCY: float = 4.0
+var _frequency: float
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	self.autostart = true
+	self._frequency = self._INITIAL_FREQUENCY
+	self.wait_time = 1.0/self._frequency
+	
 
+func increment_frequency() -> void:
+	self._frequency += 1.0
+	self.wait_time = 1.0/self._frequency
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func reset() -> void:
+	self._frequency = self._INITIAL_FREQUENCY

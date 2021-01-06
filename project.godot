@@ -23,6 +23,7 @@ config/icon="res://icon.png"
 
 SequenceGenerator="*res://generators/sequence_generator.gd"
 WorldClock="*res://world_clock.gd"
+CarGenerator="*res://generators/car_generator.gd"
 
 [display]
 

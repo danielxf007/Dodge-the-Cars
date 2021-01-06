@@ -3,10 +3,12 @@ signal got_seq(seq)
 const _ELEMENTS: Array = [0, 1]
 const _ZERO: int = 0
 const _ONE: int = 1
-const _SEQ_LEN: int = 4
+const _SEQ_LEN: int = 8
 var _seqs: Array
 var _r_gen: RandomNumberGenerator
 var _curr_seq: Array
+var _cycle_delay: int
+var _n_curr_cycles: int
 
 func _ready():
 	self._r_gen = RandomNumberGenerator.new()
@@ -15,6 +17,8 @@ func _ready():
 	self.create_sequences([])
 	var index: int = self._r_gen.randi_range(self._ZERO, self._seqs.size()-1)
 	self._curr_seq = self._seqs[index]
+	self._cycle_delay = 3
+	self._n_curr_cycles = 3
 
 func valid_sequence(curr_seq: Array) -> bool:
 	return curr_seq.has(self._ZERO) and curr_seq.has(self._ONE)
@@ -60,12 +64,16 @@ func choose_sequence(sequences: Array) -> Array:
 	return sequences[index]
 
 func _on_WorldClock_timeout() -> void:
-	var zeros_ind: Array = self.get_zeros_index()
-	var quantity: int = self._r_gen.randi_range(self._ZERO, zeros_ind.size()-1)
-	if quantity:
-		var indexes: Array = self.choose_indexes(quantity, zeros_ind)
-		var sequences: Array = self.filter_sequences(indexes)
-		self._curr_seq = self.choose_sequence(sequences)
+	if self._n_curr_cycles == self._cycle_delay:
+		var zeros_ind: Array = self.get_zeros_index()
+		var quantity: int = self._r_gen.randi_range(self._ZERO, zeros_ind.size()-1)
+		if quantity:
+			var indexes: Array = self.choose_indexes(quantity, zeros_ind)
+			var sequences: Array = self.filter_sequences(indexes)
+			self._curr_seq = self.choose_sequence(sequences)
+		else:
+			self._curr_seq = self.choose_sequence(self._seqs)
+		self.emit_signal("got_seq", self._curr_seq)
+		self._n_curr_cycles = self._ZERO
 	else:
-		self._curr_seq = self.choose_sequence(self._seqs)
-	self.emit_signal("got_seq", self._curr_seq)
+		self._n_curr_cycles += self._ONE
