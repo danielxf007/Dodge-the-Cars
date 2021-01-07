@@ -27,7 +27,7 @@ CarGenerator="*res://generators/car_generator.gd"
 
 [display]
 
-window/size/width=512
+window/size/width=576
 window/size/height=640
 window/size/resizable=false
 

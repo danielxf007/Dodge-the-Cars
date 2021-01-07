@@ -1,11 +1,12 @@
 extends Sprite
+signal position_update(row, col)
 const _START_POS: Vector2 = Vector2(224, 608)
-const _DIMENSIONS: Vector2 = Vector2(62, 62)
+const _DIMENSIONS: Vector2 = Vector2(56, 56)
 const _MOVEMENT_STEP: int = 64
 const _MIN_ROW: int = 0
 const _MAX_ROW: int = 9
 const _MIN_COLUMN: int = 0
-const _MAX_COLUMN: int = 7
+const _MAX_COLUMN: int = 6
 var _curr_row: int
 var _curr_col: int
 
@@ -34,3 +35,7 @@ func _input(event):
 		if self._curr_row > self._MIN_COLUMN:
 			self.global_position.y -= self._MOVEMENT_STEP
 			self._curr_row -= 1
+	self.emit_signal("position_update", self._curr_row, self._curr_col)
+
+func _on_Area2D_area_entered(_area) -> void:
+	print("collided")
