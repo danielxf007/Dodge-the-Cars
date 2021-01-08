@@ -21,7 +21,7 @@ func create_car(seq: Array) -> void:
 	for element in seq:
 		if element:
 			car = self._car_scene.instance()
-			self._world.add_child(car)
+			self._world.spawn_car(car)
 # warning-ignore:return_value_discarded
 			car.connect("got_out_screen", self._world, "on_Car_out_screen")
 			car.global_position = curr_pos

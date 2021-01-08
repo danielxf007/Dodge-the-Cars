@@ -1,5 +1,6 @@
 extends Node
 signal got_seq(seq)
+signal reseted()
 const _ELEMENTS: Array = [0, 1]
 const _ZERO: int = 0
 const _ONE: int = 1
@@ -77,3 +78,9 @@ func _on_WorldClock_timeout() -> void:
 		self._n_curr_cycles = self._ZERO
 	else:
 		self._n_curr_cycles += self._ONE
+
+func reset() -> void:
+	self._r_gen.randomize()
+	var index: int = self._r_gen.randi_range(self._ZERO, self._seqs.size()-1)
+	self._curr_seq = self._seqs[index]
+	self.emit_signal("reseted")

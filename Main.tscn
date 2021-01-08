@@ -17,3 +17,32 @@ position = Vector2( 512, 320 )
 texture = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="Points" type="Label" parent="."]
+margin_left = 448.0
+margin_top = 228.0
+margin_right = 576.0
+margin_bottom = 356.0
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CarSpawn" type="Node" parent="."]
+
+[node name="Reset" type="Button" parent="."]
+visible = false
+margin_left = 448.0
+margin_top = 512.0
+margin_right = 576.0
+margin_bottom = 640.0
+text = "Try Again?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="got_reseted" from="." to="Player" method="_on_Main_got_reseted"]
+[connection signal="collided" from="Player" to="." method="_on_Player_collided"]
+[connection signal="reseted" from="Player" to="." method="on_element_got_reseted"]
+[connection signal="button_down" from="Reset" to="." method="reset"]

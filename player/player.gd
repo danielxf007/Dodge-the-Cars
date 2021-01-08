@@ -1,5 +1,6 @@
 extends Sprite
-signal position_update(row, col)
+signal collided()
+signal reseted()
 const _START_POS: Vector2 = Vector2(224, 608)
 const _DIMENSIONS: Vector2 = Vector2(56, 56)
 const _MOVEMENT_STEP: int = 64
@@ -35,7 +36,16 @@ func _input(event):
 		if self._curr_row > self._MIN_COLUMN:
 			self.global_position.y -= self._MOVEMENT_STEP
 			self._curr_row -= 1
-	self.emit_signal("position_update", self._curr_row, self._curr_col)
 
 func _on_Area2D_area_entered(_area) -> void:
-	print("collided")
+	self.set_process_input(false)
+	self.hide()
+	self.emit_signal("collided")
+
+
+func _on_Main_got_reseted():
+	self.set_process_input(true)
+	self.global_position = self._START_POS
+	self._curr_col = 3
+	self._curr_row = 9
+	self.emit_signal("reseted")
